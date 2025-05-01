@@ -2,50 +2,52 @@ from google.adk.agents import LlmAgent
 
 # --- Define Sub-Agents ---
 
-# Scriptwriter agent (could use a tool like google_search for trends)
-scriptwriter_agent = LlmAgent(
-    name="scriptwriter_agent",
+# Trend finder agent
+trend_finder_agent = LlmAgent(
+    name="trend_finder_agent",
     model="gemini-2.5-pro-exp-03-25",
-    description="Writes engaging scripts for YouTube Shorts based on current trends.",
-    instruction="""Given a topic, research current trends and write a concise, engaging script for a YouTube Short. Use the google_search tool if needed to find up-to-date information.""",
+    description="Discovers trending hashtags for social media content.",
+    instruction="""Given a topic, research and identify the most relevant trending hashtags.
+                   Return 3-5 hashtags that would maximize engagement.""",
     # tools=[google_search], # Uncomment if using built-in tools
 )
 
-# Visualizer agent
-visualizer_agent = LlmAgent(
-    name="visualizer_agent",
+# Content writer agent
+content_writer_agent = LlmAgent(
+    name="content_writer_agent",
     model="gemini-2.5-pro-exp-03-25",
-    description="Creates visual descriptions to accompany YouTube Shorts scripts.",
-    instruction="""Given a script, suggest creative visual scenes or imagery that would enhance the Short."""
+    description="Creates engaging social media posts using trending hashtags.",
+    instruction="""Given a topic and trending hashtags, write a catchy, engaging social media post.
+                   Keep it concise and optimized for the platform."""
 )
 
-# Formatter agent
-formatter_agent = LlmAgent(
-    name="formatter_agent",
+# Visual concept agent
+visual_concept_agent = LlmAgent(
+    name="visual_concept_agent",
     model="gemini-2.5-pro-exp-03-25",
-    description="Formats scripts and visuals into a polished Markdown output.",
-    instruction="""Combine the script and visuals into a clear, well-structured Markdown format for easy review."""
+    description="Suggests visual concepts to accompany social media posts.",
+    instruction="""Given a social media post, suggest creative visual ideas that would
+                   enhance engagement and complement the written content."""
 )
 
 # --- Define Parent Agent with Hierarchy ---
 
-youtube_shorts_agent = LlmAgent(
-    name="youtube_shorts_agent",
+social_media_agent = LlmAgent(
+    name="social_media_agent",
     model="gemini-2.5-pro-exp-03-25",
-    description="You are ShortForm Genius, an AI specialized in crafting engaging YouTube Shorts content.",
+    description="You are SocialMedia Genius, an AI specialized in crafting engaging social media content.",
     instruction="""When given a topic, coordinate with your sub-agents to:
-                    1. Generate a script (scriptwriter_agent)
-                    2. Create visual ideas (visualizer_agent)
-                    3. Format everything nicely (formatter_agent)
-                    Return the final Markdown for the user.
+                    1. Find trending hashtags (trend_finder_agent)
+                    2. Write an engaging post (content_writer_agent)
+                    3. Suggest visual concepts (visual_concept_agent)
+                    Return the complete social media content package to the user.
                 """,
     sub_agents=[
-        scriptwriter_agent,
-        visualizer_agent,
-        formatter_agent
+        trend_finder_agent,
+        content_writer_agent,
+        visual_concept_agent
     ]
 )
 
 # --- Run the Root Agent for the Runner ---
-root_agent = youtube_shorts_agent
-
+root_agent = social_media_agent
