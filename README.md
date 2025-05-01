@@ -88,7 +88,3 @@ You can customize each agent's behavior by modifying the instructions in `agent.
 
 For more information about Google's Agent Development Kit (ADK) and how to build AI agents, check out my article:
 [Meet Google's Agent Development Kit (ADK)🤯: Build Real AI Agents, Not Just Chatbots](https://dev.to/rawheel/meet-googles-agent-development-kit-adk-build-real-ai-agents-not-just-chatbots-44g)
-
-## License
-
-[Your chosen license]
